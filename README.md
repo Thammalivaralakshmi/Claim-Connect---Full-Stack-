@@ -33,7 +33,44 @@ The system enables patients, hospitals, and insurance companies to interact seam
    - **Claim-Request Service** → Handles claim submissions, approvals, and processing  
    - **Hospital Service** → Manages hospital records & treatment details  
    - **Patient Service** → Stores and manages patient data  
-   - **Insurance Company Service** → Manages policies, verifications, and settlements  
+   - **Insurance Company Service** → Manages policies, verifications, and settlements
+   - 
+## 🏗️ System Architecture  
+
+flowchart TD
+    A[React Frontend] --> B[API Gateway]
+    B --> C[Eureka Server]
+    B --> D[Claim Request Service]
+    B --> E[Hospital Service]
+    B --> F[Patient Service]
+    B --> G[Insurance Company Service]
+
+    C --> D
+    C --> E
+    C --> F
+    C --> G
+
+    subgraph Config[Spring Cloud Config Server]
+        H[Centralized Config - GitHub Repo]
+    end
+
+    D -->|Reads Config| H
+    E -->|Reads Config| H
+    F -->|Reads Config| H
+    G -->|Reads Config| H
+
+    subgraph DB[MySQL Databases]
+        Ddb[(Claims DB)]
+        Edb[(Hospital DB)]
+        Fdb[(Patient DB)]
+        Gdb[(Insurance DB)]
+    end
+
+    D --> Ddb
+    E --> Edb
+    F --> Fdb
+    G --> Gdb
+
 
 ---
 
